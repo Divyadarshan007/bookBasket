@@ -14,7 +14,6 @@
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg mb-5">
         <div class="container">
             <a class="navbar-brand" href="#">
@@ -25,35 +24,38 @@
 
     <div class="container">
         <div class="row g-5">
-
             <div class="col-lg-4">
                 <div class="tech-card sticky-sidebar">
                     <div class="card-header-tech">
-                        <h5><i class="fas <%= thatOneData?'fa-pen':'fa-plus-circle'%> me-2"></i><%= thatOneData?'update Book':'Add New Book'%></h5>
+                        <h5><i class="fas <%= thatOneData?'fa-pen':'fa-plus-circle'%> me-2"></i>
+                            <%= thatOneData?'update Book':'Add New Book'%>
+                        </h5>
                     </div>
                     <div class="p-4">
                         <form action="/<%= thatOneData ? `edit-book/${thatOneData.id}`: 'add-book' %>" method="post">
                             <div class="mb-3">
                                 <label class="form-label">Book Name</label>
                                 <input type="text" name="name" class="form-control" value="<%= thatOneData?.name %>"
-                                    placeholder="e.g. The Matrix Design" required>
+                                    placeholder="e.g. The Matrix Design">
+
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Author</label>
                                 <input type="text" name="author" class="form-control" value="<%= thatOneData?.author %>"
-                                    placeholder="e.g. John Doe" required>
+                                    placeholder="e.g. John Doe">
+
                             </div>
 
                             <div class="row">
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Price (₹)</label>
                                     <input type="number" name="price" class="form-control"
-                                        value="<%= thatOneData?.price %>" placeholder="0.00" required>
+                                        value="<%= thatOneData?.price %>" placeholder="0.00">
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Genre</label>
-                                    <select class="form-select" name="genre" required>
+                                    <select class="form-select" name="genre">
                                         <option value="">Select...</option>
                                         <option <%=thatOneData?.genre=='Fiction' ?'selected':'' %>
                                             value="Fiction">Fiction</option>
@@ -73,8 +75,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Publish Date</label>
-                                <input type="date" class="form-control" value="<%= thatOneData?.date %>" name="date"
-                                    required>
+                                <input type="date" class="form-control" value="<%= thatOneData?.date %>" name="date">
                             </div>
 
                             <div class="mb-3 p-3" style="border: 1px dashed rgba(255,255,255,0.2); border-radius: 0;">
@@ -113,7 +114,7 @@
                                 <i class="fas <%= thatOneData?'fa-pen':'fa-plus'%>  me-2"></i>
                                 <%= thatOneData?'update':'Add Book'%>
                             </button>
-                            <div class="text-center mt-2">
+                            <div class="text-center <%= thatOneData?'d-block':'d-none'%> mt-2">
                                 <a href="/" class="text-decoration-none border-bottom text-white">Cancel edit</a>
                             </div>
                         </form>
@@ -132,8 +133,8 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table text-nowrap">
+                    <div class="table-responsive table-scroll">
+                        <table class="table text-nowrap ">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -145,7 +146,7 @@
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="">
                                 <% if (bookData.length===0) { %>
                                     <tr>
                                         <td colspan="7" class="text-center py-5" style="color: rgba(255,255,255,0.3);">
@@ -221,7 +222,7 @@
                 color: "#fff",
                 background: "#15192b",
                 showCancelButton: true,
-                confirmButtonColor: "#bc13fe", // Neon Pink
+                confirmButtonColor: "#bc13fe",
                 cancelButtonColor: "#333",
                 confirmButtonText: "Yes, Delete",
                 cancelButtonText: "Cancel"
@@ -229,6 +230,18 @@
                 if (result.isConfirmed) {
                     window.location.href = `delete-book/${deleteId}`
                 }
+            });
+        }
+        const url = new URL(window.location.href);
+        const error = url.searchParams.get("error");
+
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error,
+            }).then(() => {
+                window.history.replaceState({}, document.title, "/");
             });
         }
     </script>

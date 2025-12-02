@@ -63,6 +63,12 @@ h5 {
     border-top: 2px solid var(--neon-cyan);
     border-left: 2px solid var(--neon-cyan);
 }
+.table-scroll {
+    max-height: 662px;     
+    overflow-y: auto;      
+    overflow-x: auto;      
+    scrollbar-width: none;
+}
 
 .tech-card::after {
     content: '';
@@ -209,6 +215,10 @@ option {
     color: var(--neon-pink);
     border: 1px solid rgba(188, 19, 254, 0.3);
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%) brightness(200%);
+} 
 
 .btn-del-tech:hover {
     background: var(--neon-pink);
