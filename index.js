@@ -13,7 +13,8 @@ app.get('/', async (req, res) => {
     const bookData = await Book.find()
 
     return res.render('index', {
-        bookData
+        bookData,
+        thatOneData: null
     });
 })
 app.post('/add-book', async (req, res) => {
@@ -26,10 +27,11 @@ app.get('/edit-book/:editId', async (req, res) => {
     const { editId } = req.params
 
     const thatOneData = await Book.findById(editId)
-    console.log(thatOneData);
+    const bookData = await Book.find()
 
-    return res.render('edit', {
-        thatOneData
+    return res.render('index', {
+        thatOneData,
+        bookData
     })
 
 })
